@@ -1,0 +1,27 @@
+# Merge these sections into your main config or .loong/config.yaml.
+# Paths are relative to the Loong workspace; start Loong from the repo root.
+# Requires Python 3.10+ on PATH (use python3 instead of python if needed).
+agents:
+  telegram:
+    kind: full
+    prompt: ./prompt.md
+    tools: [run_command, read_file]
+    max_iterations: 20
+    # Add provider/model overrides here if needed.
+
+wakeups:
+  servers:
+    telegram:
+      enabled: true
+      command: python
+      args: ["-u", "worker.py", "run"]
+      agent: telegram
+      session_scope: key
+      env:
+        TELEGRAM_ALLOWED_USER_IDS: ${TELEGRAM_ALLOWED_USER_IDS}
+        # Test only; permits any user while keeping chat restrictions.
+        # TELEGRAM_ALLOW_ALL_USERS: "true"
+        # Empty: only private chats. Groups require explicit chat IDs as well.
+        TELEGRAM_ALLOWED_CHAT_IDS: ${TELEGRAM_ALLOWED_CHAT_IDS:-}
+        TELEGRAM_BOT_TOKEN_FILE: bot-token.txt
+        TELEGRAM_STATE_FILE: state/cursor.json

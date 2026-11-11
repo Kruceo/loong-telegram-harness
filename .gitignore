@@ -1,0 +1,12 @@
+bot-token.txt
+state/
+__pycache__/
+*.pyc
+.env
+.env.*
+
+# Private runtime configuration and local binaries
+config.yaml
+reviewer-config.yaml
+loong-linux
+*.exe
